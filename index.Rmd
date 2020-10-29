@@ -12,7 +12,7 @@ output:
 
 ***
 
-# Introduction to Open Data Science - Course Project
+Introduction to Open Data Science - Course Project
 
 ```{r child = "chapter1.Rmd"}
 # This will include Chapter 1 (that is updated in its own file) in the document.

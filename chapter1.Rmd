@@ -1,5 +1,9 @@
 
-# About the project
+# startup 
+
+## About the project
+
+
 
 *Write a short description about the course and add a link to your GitHub repository here. This is an R Markdown (.Rmd) file so you should use R Markdown syntax.*
 
@@ -10,4 +14,4 @@ date()
 
 ```
 The text continues here.
-
+blabla
