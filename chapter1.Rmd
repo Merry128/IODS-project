@@ -14,4 +14,6 @@ date()
 
 ```
 The text continues here.
-blabla
+
+This course is both exciting and challenging to me as a beginner user of R. I expect to do basic data analysis using R after this course and also grasp the basic knowledge of different data analysis methods.It just took me one day to tackle the 'Git button disappear' problem and I assume that there are more harder challenges waiting. Wish me good luck and not quit.
+ My GitHub repository is: https://github.com/Merry128/IODS-project.git
