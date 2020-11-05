@@ -13,3 +13,109 @@ date()
 ```
 
 Here we go again...
+
+Xiaoxu Liu 2.11.2020
+
+# read the data into memory
+lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+
+# Look at the dimensions of the data
+dim(lrn14)
+
+# Look at the structure of the data
+str(lrn14)
+ 
+#Create an analysis dataset with 7 variables 
+library(dplyr)
+
+c(1,2,3,4,5) / 2
+
+lrn14$Attitude
+ 
+lrn14$Attitude / 10
+ 
+lrn14$attitude <- lrn14$Attitude / 10
+
+library(dplyr)
+
+deep_questions <- c("D03", "D11", "D19", "D27", "D07",
+                   "D14", "D22", "D30","D06",  "D15", "D23", "D31")
+
+surface_questions <- c("SU02","SU10","SU18","SU26", "SU05","SU13",
+                    "SU21","SU29","SU08","SU16","SU24","SU32")
+
+strategic_questions <- c("ST01","ST09","ST17","ST25",
+                         "ST04","ST12","ST20","ST28")
+ 
+deep_columns <- select(lrn14, one_of(deep_questions))
+
+lrn14$deep <- rowMeans(deep_columns)
+
+surface_columns <- select(lrn14, one_of(surface_questions))
+
+lrn14$surf <- rowMeans(surface_columns)
+
+strategic_columns <- select(lrn14, one_of(strategic_questions))
+
+lrn14$stra<-rowMeans(strategic_columns)
+
+library(dplyr)
+
+keep_columns <- c("gender","Age","attitude", "deep", "stra", "surf", "Points")
+
+learning2014 <- select(lrn14, one_of(keep_columns)
+
+str(learning2014)
+
+colnames(learning2014)
+ 
+colnames(learning2014)[2] <- "age"
+colnames(learning2014)[7] <- "points"
+colnames(learning2014)
+[1] "gender"   "age"    "attitude" "deep"  "stra"   "surf"    
+[7] "points"  
+
+library(dplyr)
+learning2014 <- filter(learning2014, points>0)
+str(learning2014)
+
+ 
+?write.csv
+getwd()  # read working directory
+setwd('Z:\\IODS-project\\Data') #set working directory
+
+write.csv(students2014, file = 'students2014.csv')
+
+
+
+# data analysis
+
+students2014 <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", sep=",", header=TRUE)
+dim(students2014)
+
+str(students2014)
+
+After excluding observations where the exam points variable is zero, the data has 166 observations and 7 variables including gender,age, attitude,deep, stra, surf and points.
+
+
+
+library(ggplot2)
+library(GGally)
+p1 <- ggplot(students2014, aes(x = attitude, y = points, col=gender))
+p2<-p1+geom_point()
+p2
+p3 <- p2 + geom_smooth(method = "lm")
+p4 <- "The relationship between points and gender, attitude"
+
+p <- ggpairs(learning2014, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+
+qplot(attitude, points, data = students2014) + geom_smooth(method = "lm")
+my_model <- lm(points ~ attitude, data = students2014)
+summary(my_model)
+
+my_model2 <- lm(points ~ attitude + stra,                  data= students2014)
+par(mfrow = c(2,2))
+plot(my_model2, which = c(1,2,5))
+
+
+

@@ -424,9 +424,56 @@ summary {
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Thu Oct 29 18:51:38 2020&quot;</code></pre>
+<pre><code>## [1] &quot;Thu Nov 05 22:01:21 2020&quot;</code></pre>
 <p>Here we go again…</p>
+<p>Xiaoxu Liu 2.11.2020</p>
 </div>
+</div>
+<div id="read-the-data-into-memory" class="section level1">
+<h1>read the data into memory</h1>
+<p>lrn14 &lt;- read.table(“<a href="http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt" class="uri">http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt</a>”, sep=&quot;, header=TRUE)</p>
+</div>
+<div id="look-at-the-dimensions-of-the-data" class="section level1">
+<h1>Look at the dimensions of the data</h1>
+<p>dim(lrn14)</p>
+</div>
+<div id="look-at-the-structure-of-the-data" class="section level1">
+<h1>Look at the structure of the data</h1>
+<p>str(lrn14)</p>
+<p>#Create an analysis dataset with 7 variables library(dplyr)</p>
+<p>c(1,2,3,4,5) / 2</p>
+<p>lrn14$Attitude</p>
+<p>lrn14$Attitude / 10</p>
+<p>lrn14<span class="math inline">\(attitude &lt;- lrn14\)</span>Attitude / 10</p>
+<p>library(dplyr)</p>
+<p>deep_questions &lt;- c(“D03”, “D11”, “D19”, “D27”, “D07”, “D14”, “D22”, “D30”,“D06”, “D15”, “D23”, “D31”)</p>
+<p>surface_questions &lt;- c(“SU02”,“SU10”,“SU18”,“SU26”, “SU05”,“SU13”, “SU21”,“SU29”,“SU08”,“SU16”,“SU24”,“SU32”)</p>
+<p>strategic_questions &lt;- c(“ST01”,“ST09”,“ST17”,“ST25”, “ST04”,“ST12”,“ST20”,“ST28”)</p>
+<p>deep_columns &lt;- select(lrn14, one_of(deep_questions))</p>
+<p>lrn14$deep &lt;- rowMeans(deep_columns)</p>
+<p>surface_columns &lt;- select(lrn14, one_of(surface_questions))</p>
+<p>lrn14$surf &lt;- rowMeans(surface_columns)</p>
+<p>strategic_columns &lt;- select(lrn14, one_of(strategic_questions))</p>
+<p>lrn14$stra&lt;-rowMeans(strategic_columns)</p>
+<p>library(dplyr)</p>
+<p>keep_columns &lt;- c(“gender”,“Age”,“attitude”, “deep”, “stra”, “surf”, “Points”)</p>
+<p>learning2014 &lt;- select(lrn14, one_of(keep_columns)</p>
+<p>str(learning2014)</p>
+<p>colnames(learning2014)</p>
+<p>colnames(learning2014)[2] &lt;- “age” colnames(learning2014)[7] &lt;- “points” colnames(learning2014) [1] “gender” “age” “attitude” “deep” “stra” “surf”<br />
+[7] “points”</p>
+<p>library(dplyr) learning2014 &lt;- filter(learning2014, points&gt;0) str(learning2014)</p>
+<p>?write.csv getwd() # read working directory setwd(‘Z:\IODS-project\Data’) #set working directory</p>
+<p>write.csv(students2014, file = ‘students2014.csv’)</p>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>data analysis</h1>
+<p>students2014 &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep=“,”, header=TRUE) dim(students2014)</p>
+<p>str(students2014)</p>
+<p>After excluding observations where the exam points variable is zero, the data has 166 observations and 7 variables including gender,age, attitude,deep, stra, surf and points.</p>
+<p>library(ggplot2) library(GGally) p1 &lt;- ggplot(students2014, aes(x = attitude, y = points, col=gender)) p2&lt;-p1+geom_point() p2 p3 &lt;- p2 + geom_smooth(method = “lm”) p4 &lt;- “The relationship between points and gender, attitude”</p>
+<p>p &lt;- ggpairs(learning2014, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap(“facethist”, bins = 20)))</p>
+<p>qplot(attitude, points, data = students2014) + geom_smooth(method = “lm”) my_model &lt;- lm(points ~ attitude, data = students2014) summary(my_model)</p>
 </div>
 
 
